@@ -3,7 +3,6 @@ set -euo pipefail
 
 # Usage:
 #   summarize_run.sh <session_dir> [model]
-#
 # Example:
 #   summarize_run.sh ~/auto-runbook/runs/2026-02-11_0930_cla llama3.1
 
@@ -18,84 +17,114 @@ fi
 
 LOG_PATH="$SESSION_DIR/session.log"
 OUT_PATH="$SESSION_DIR/runbook.md"
-TPL_PATH="$HOME/auto-runbook/templates/runbook_template.md"
 
 if [[ ! -f "$LOG_PATH" ]]; then
   echo "ERROR: Missing log file: $LOG_PATH"
   exit 1
 fi
 
+SESSION_NAME="$(basename "$SESSION_DIR")"
+DATE_STR="$(date -Is)"
 HOST="$(hostname)"
 USER_NAME="$(whoami)"
-DATE_STR="$(date -Is)"
 PWD_STR="$(pwd)"
-SESSION_NAME="$(basename "$SESSION_DIR")"
 
-# Small helper: extract likely commands (best-effort)
-# This won't catch everything (because logs include output), but it's useful.
-COMMANDS_EXTRACT="$(grep -E '^[[:alnum:]_./-]+|^\$ |^# ' "$LOG_PATH" | tail -n 200 || true)"
+# Read log (cap extremely large logs to last N lines to keep AI fast/stable)
+MAX_LINES=8000
+LOG_TEXT="$(tail -n "$MAX_LINES" "$LOG_PATH")"
 
-PROMPT=$(cat <<PROMPT_EOF
+AI_RUNBOOK=""
+
+if command -v ollama >/dev/null 2>&1; then
+  PROMPT=$(cat <<'PROMPT_EOF'
 You are an expert SRE who writes clean runbooks.
 
-Given a raw Linux terminal session log, produce a structured Markdown runbook.
+Convert this raw Linux terminal session log into a structured Markdown runbook.
 
-Hard requirements:
-- Use concise headings and bullets.
-- Provide a step-by-step section with numbered steps.
-- Extract important commands in code blocks.
-- Include an "Errors & Fixes" section (even if empty).
-- Include a "Result" section (best guess based on log).
-- Do NOT invent facts. If unsure, say "Unknown".
-
-Output ONLY the runbook content for insertion into a template:
-- STEPS (bullets + numbered steps)
-- COMMANDS (code blocks)
-- ERRORS (bullets/table)
-- RESULT (short bullets)
-
-Here is the session log:
----
-$(cat "$LOG_PATH")
----
-
-If the log is huge, focus on:
-- CLA Commander steps
-- config edits
-- network actions
-- file paths
-- version checks
-- failures/retries
+Rules:
+- Do NOT invent facts. If unsure, write "Unknown".
+- Keep it practical and short.
+- Include these sections exactly (in this order):
+  1) Objective
+  2) Environment
+  3) Step-by-step (numbered)
+  4) Commands (code blocks)
+  5) Errors & Fixes
+  6) Result
+  7) Artifacts
+- Focus on CLA Commander actions, configs, networking, versions, and failures/retries.
 PROMPT_EOF
 )
+export MODEL PROMPT LOG_TEXT OUT_PATH LOG_PATH SESSION_NAME SESSION_DIR DATE_STR HOST USER_NAME PWD_STR MAX_LINES AI_RUNBOOK
+  AI_RUNBOOK="$(python3 - <<PY
+import os, subprocess, textwrap
 
-# Call ollama (offline). If ollama isn't available, fail clearly.
-if ! command -v ollama >/dev/null 2>&1; then
-  echo "ERROR: ollama not found. Install Ollama or modify this script to use another AI tool."
-  exit 1
+model = os.environ["MODEL"]
+prompt = os.environ["PROMPT"]
+log_text = os.environ["LOG_TEXT"]
+
+full = prompt + "\n\nSESSION LOG:\n---\n" + log_text + "\n---\n"
+
+p = subprocess.run(
+    ["ollama", "run", model],
+    input=full,
+    text=True,
+    capture_output=True
+)
+if p.returncode != 0:
+    print("")
+else:
+    print(p.stdout.strip())
+PY
+)"
+else
+  echo "WARN: ollama not found; generating a basic runbook without AI."
 fi
 
-AI_OUT="$(printf "%s" "$PROMPT" | ollama run "$MODEL")"
+# Fallback if AI returned empty
+if [[ -z "$AI_RUNBOOK" ]]; then
+  AI_RUNBOOK=$(cat <<FALLBACK
+## Objective
+Unknown (AI summarization unavailable).
 
-# Split AI_OUT into sections (simple heuristic):
-# We ask the model to output content; we’ll just embed it as STEPS for now if not labeled.
-STEPS="$AI_OUT"
-COMMANDS="$COMMANDS_EXTRACT"
-ERRORS="(See Steps section; if none found, leave empty.)"
-RESULT="(See Steps section.)"
+## Environment
+- Date: $DATE_STR
+- Host: $HOST
+- User: $USER_NAME
 
-# Render template
-sed \
-  -e "s|{{SESSION_NAME}}|$SESSION_NAME|g" \
-  -e "s|{{DATE}}|$DATE_STR|g" \
-  -e "s|{{HOST}}|$HOST|g" \
-  -e "s|{{USER}}|$USER_NAME|g" \
-  -e "s|{{PWD}}|$PWD_STR|g" \
-  -e "s|{{LOG_PATH}}|$LOG_PATH|g" \
-  -e "s|{{STEPS}}|$STEPS|g" \
-  -e "s|{{COMMANDS}}|$(printf "%s" "$COMMANDS" | sed 's/[&/\]/\\&/g')|g" \
-  -e "s|{{ERRORS}}|$ERRORS|g" \
-  -e "s|{{RESULT}}|$RESULT|g" \
-  "$TPL_PATH" > "$OUT_PATH"
+## Step-by-step
+1. See raw log.
 
-echo "✅ Runbook created: $OUT_PATH"
+## Commands
+(See raw log.)
+
+## Errors & Fixes
+(See raw log.)
+
+## Result
+Unknown.
+
+## Artifacts
+- Raw log: $LOG_PATH
+FALLBACK
+)
+fi
+
+# Write final runbook with a small header
+python3 - <<PY
+from pathlib import Path
+import os
+
+out_path = Path(os.environ["OUT_PATH"])
+session_name = os.environ["SESSION_NAME"]
+date_str = os.environ["DATE_STR"]
+host = os.environ["HOST"]
+user = os.environ["USER_NAME"]
+log_path = os.environ["LOG_PATH"]
+runbook = os.environ["AI_RUNBOOK"]
+
+header = f"# Runbook: {session_name}\n\n- Date: {date_str}\n- Host: {host}\n- User: {user}\n- Raw log: {log_path}\n\n---\n\n"
+out_path.write_text(header + runbook.strip() + "\n")
+print(f"✅ Runbook created: {out_path}")
+PY
+
