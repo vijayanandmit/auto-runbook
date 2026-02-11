@@ -1,0 +1,6 @@
+date: 2026-02-11T13:07:47-05:00
+host: Lambda-Vector
+user: ge-admin
+cwd:  /home/ge-admin/auto-runbook/bin
+name: cla_session
+dir:  /home/ge-admin/auto-runbook/runs/2026-02-11_130747_cla_session

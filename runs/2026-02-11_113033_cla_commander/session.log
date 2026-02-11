@@ -1,0 +1,63 @@
+echo 'Logging to: /home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log'
+echo 'When done, type: exit'
+^[[>0;10;1c[?2004h(base) ge-admin@Lambda-Vector:~$ echo '--- AUTO-RUNBOOK START: 2026-02-11T11:30:33-05:00 ---' | tee -a '/home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log'
+[?2004l--- AUTO-RUNBOOK START: 2026-02-11T11:30:33-05:00 ---
+--- AUTO-RUNBOOK START: 2026-02-11T11:30:33-05:00 ---
+[?2004h(base) ge-admin@Lambda-Vector:~$ echo 'Logging to: /home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log'
+[?2004lLogging to: /home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log
+[?2004h(base) ge-admin@Lambda-Vector:~$ echo 'When done, type: exit'
+[?2004lWhen done, type: exit
+[?2004h(base) ge-admin@Lambda-Vector:~$ 0;10;1c[K[K[K[K[K[K[Kecho 'When done, type: exit'Logging to: /home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log'[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CWhen done, type: exit'[K[Kecho 'When done, type: exit'Logging to: /home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log'[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C--- AUTO-RUNBOOK START: 2026-02-11T11:30:33-05:00 ---' | tee -a '/home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log'Mnano bin/runbook_start.sh [K
+[KM[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit commit -m 'initial auto-runbook system'[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cadd .[Kcommit -m 'initial auto-runbook system'[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cadd .[Kcommit -m 'initial auto-runbook system'[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[17Pnano bin/runbook_start.sh echo '--- AUTO-RUNBOOK START: 2026-02-11T11:30:33-05:00 ---' | tee -a '/home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log'M[9PLogging to: /home/ge-admin/auto-runbook/runs/2026-02-11_113033_cla_commander/session.log'
+[KM[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CWhen done, type: exit'[K[Kecho 'When done, type: exit'[K[K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ sh[Ksh root@[3m192.168.245[23m192.168.245[C245.245[C[C[C
+[?2004lThe authenticity of host '192.168.2.245 (192.168.2.245)' can't be established.
+ECDSA key fingerprint is SHA256:PAe0+VmFTkHC++ZIoSYaK6qdbCumqz47ruQ5R4c/w20.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.2.245' (ECDSA) to the list of known hosts.
+(root@192.168.2.245) Password: 
+The time and date of this login have been sent to the system logs.
+
+WARNING:
+   All commands run on the ESXi shell are logged and may be included in
+   support bundles. Do not provide passwords directly on the command line.
+   Most tools can prompt for secrets or accept them from standard input.
+
+VMware offers supported, powerful system administration tools.  Please
+see www.vmware.com/go/sysadmintools for details.
+
+The ESXi Shell can be disabled by an administrative user. See the
+vSphere Security documentation for more information.
+[root@localhost:~] [root@localhost:~] [J192.168.2.177p192.168.2.177[13Di192.168.2.177[13Dn192.168.2.177[13Dg192.168.2.177[13D 192.168.2.177[13D192.168.2.177
+PING 192.168.2.177 (192.168.2.177): 56 data bytes
+
+--- 192.168.2.177 ping statistics ---
+3 packets transmitted, 0 packets received, 100% packet loss
+
+[root@localhost:~] nmap 192.168.245
+-sh: nmap: not found
+[root@localhost:~] exit
+Connection to 192.168.2.245 closed.
+[?2004h(base) ge-admin@Lambda-Vector:~$ namp [K[K[K[Kmap [3m192.168.245[23m192.168.245
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-02-11 12:15 EST
+
+[?2004h(base) ge-admin@Lambda-Vector:~$ nmap 192.168.245.45245
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-02-11 12:15 EST
+Stats: 0:00:07 elapsed; 0 hosts completed (1 up), 1 undergoing Connect Scan
+Connect Scan Timing: About 68.90% done; ETC: 12:16 (0:00:03 remaining)
+Nmap scan report for 192.168.2.245
+Host is up (0.11s latency).
+Not shown: 992 filtered ports
+PORT     STATE  SERVICE
+22/tcp   open   ssh
+80/tcp   open   http
+443/tcp  open   https
+902/tcp  open   iss-realsecure
+5988/tcp closed wbem-http
+8000/tcp open   http-alt
+8300/tcp open   tmi
+9080/tcp open   glrpc
+
+Nmap done: 1 IP address (1 host up) scanned in 9.39 seconds
+[?2004h(base) ge-admin@Lambda-Vector:~$ [K(base) ge-admin@Lambda-Vector:~$ exit
+[?2004llogout
