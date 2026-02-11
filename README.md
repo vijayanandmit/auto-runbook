@@ -12,7 +12,7 @@ When working with complex systems, infrastructure, or long-running troubleshooti
 - **Provides reproducible documentation** for future reference or onboarding
 
 Perfect for:
-- Infrastructure management (VMs, ESXi hosts, cloud services)
+- Linux based CLI environment
 - Software development and configuration tasks
 - Troubleshooting and incident response
 - Creating operational documentation on the fly
