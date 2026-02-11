@@ -1,8 +1,31 @@
-# Auto-Runbook
+# Auto Runbook ⚡
+Automated Runbook Engine for Incident Response, DevOps, and AI-assisted Operations.
 
-A lightweight tool to automatically capture, document, and version control your terminal sessions by converting raw logs into structured, AI-generated runbooks.
+## Why Auto-Runbook?
+Modern systems fail fast. Manual troubleshooting is slow and error-prone.
 
-## Use Case
+Auto-Runbook enables:
+- ⚡ Automated incident diagnosis
+- 🔁 Self-healing workflows
+- 🤖 AI-assisted troubleshooting
+- 📜 Reusable operational playbooks
+- 🚀 Faster MTTR
+
+## Use Cases
+- DevOps / SRE automation
+- Incident response
+- AI Ops / Observability
+- Self-healing infrastructure
+- Automated troubleshooting
+
+## Quick Demo
+```bash
+git clone https://github.com/vijayanandmit/auto-runbook
+cd auto-runbook
+python runbook.py
+
+## Contributing
+PRs welcome. Ideas → Issues.
 
 When working with complex systems, infrastructure, or long-running troubleshooting sessions, it's easy to lose track of what you did, why you did it, and the results. This tool:
 
