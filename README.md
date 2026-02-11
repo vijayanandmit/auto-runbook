@@ -173,6 +173,6 @@ git status  # See your uncommitted runbooks
 git log -1  # View the last runbook commit
 ```
 
-## License
+# Contributing PRs welcome. Ideas → Issues.
 
-MIT
+# Star ⭐ if useful
